@@ -1,0 +1,651 @@
+swagger: "2.0"
+info:
+  description: "Online Car Shop"
+  version: "1.0.0"
+  title: "Infinity Motors"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "alamine.moussa@smoothstack.com"
+tags:
+- name: "car"
+  description: "Car Details"
+- name: "order"
+  description: "Order Details"
+- name: "cart"
+  description: "Cart Details/items"
+- name: "user"
+  description: "user Details"
+- name: "Inventorie"
+  description: "Inventorie Details" 
+schemes:
+- "https"
+- "http"
+paths:
+  /cars:
+    get:
+      tags:
+      - "car"
+      summary: "The list of all cars"
+      operationId: "getAllCars"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "always successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Car"
+  /car/{carId}:
+    get:
+      tags:
+      - "car"
+      summary: "Find a car by id"
+      description: "Returns a single car with the car specs"
+      operationId: "getCar"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "car id for car to return"
+        required: true
+        type: "number"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Car"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Car not found"
+  /car:
+    post:
+      tags:
+      - "car"
+      summary: "Add a car"
+      description: "Create a car with the car specs"
+      operationId: "AddCar"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "type"
+      - name: "make"
+      - name: "model"
+      - name: "year"
+      - name: "price"
+      - name: "vinnumber"
+      - name: "engine"
+      - name: "transmission"
+      - name: "color"
+      - name: "horsepower"
+      - name: "weightLBS"
+      - name: "heightIN"
+      - name: "lenghtIN"
+      - name: "widthIN"
+        in: "body"
+        description: "car to be created"
+        required: true
+        type: "body"
+      responses:
+        201:
+          description: "successfully created"
+          schema:
+            $ref: "#/definitions/Car"
+        400:
+          description: "Invalid Json object"
+  /car/{carId}:
+    put:
+      tags:
+      - "car"
+      summary: "update a car"
+      description: "update a car with the car specs"
+      operationId: "EditCar"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "carId"
+        in: "path"
+      - name: "type"
+        in: "body"
+      - name: "make"
+        in: "body"
+      - name: "model"
+        in: "body"
+      - name: "year"
+        in: "body"
+      - name: "price"
+        in: "body"
+      - name: "vinnumber"
+        in: "body"
+      - name: "engine"
+        in: "body"
+      - name: "transmission"
+        in: "body"
+      - name: "color"
+        in: "body"
+      - name: "horsepower"
+        in: "body"
+      - name: "weightLBS"
+        in: "body"
+      - name: "heightIN"
+        in: "body"
+      - name: "lenghtIN"
+        in: "body"
+      - name: "widthIN"
+        in: "body"
+        description: "car to be cupdated"
+        required: true
+        type: "body"
+      responses:
+        200:
+          description: "successfully updated"
+          schema:
+            $ref: "#/definitions/Car"
+        400:
+          description: "Invalid Json object"   
+  /car/{carId}:
+    delete:
+      tags:
+      - "car"
+      summary: "delete a car by id"
+      description: "delete a single car with the car specs"
+      operationId: "deleteCar"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "car id for car to delete"
+        required: true
+        type: "number"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Car"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Car not found"       
+  /orders:
+    get:
+      tags:
+      - "order"
+      summary: "Returns list of orders"
+      description: "Returns a list of all orders in the database"
+      operationId: "getOrders"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Order"
+  /order/{orderId}:
+    get:
+      tags:
+      - "order"
+      summary: "Get details of an order"
+      description: "Returns full details of a given order"
+      operationId: "getOrderById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "orderId"
+        in: "path"
+        description: "order number of orders to return"
+        required: true
+        type: "number"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Order"
+        400:
+          description: "Invalid Order"
+        404:
+          description: "No Such Order"
+  /order/{orderId}:
+    put:
+      tags:
+      - "order"
+      summary: "update details of an order"
+      description: "update full details of a given order"
+      operationId: "EditOrder"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "orderId"
+        in: "path"
+      - name: "userId"
+        in: "body"
+      - name: "carId1"
+        in: "body"
+      - name: "carId2"
+        in: "body"
+      - name: "totalprice"
+        in: "body"
+      - name: "purchaseDate"
+        description: "order  to update"
+        required: true
+        type: "body"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Order"
+        400:
+          description: "Invalid Order"
+        404:
+          description: "No Such Order"
+  /order:
+    post:
+      tags:
+      - "order"
+      summary: "create an order "
+      description: "create an order with details"
+      operationId: "AddOrder"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "body"
+      - name: "carId1"
+        in: "body"
+      - name: "carId2"
+        in: "body"
+      - name: "totalprice"
+        in: "body"
+      - name: "purchaseDate"
+        description: "order  to update"
+        required: true
+        type: "body"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Order"
+        400:
+          description: "Invalid Order"
+  /users:
+    get:
+      tags:
+      - "user"
+      summary: "The list of all users"
+      operationId: "getAllUsers"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "always successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Car"
+  /user/{userId}:
+    get:
+      tags:
+      - "user"
+      summary: "Find a user by id"
+      description: "Returns a single user with the user details"
+      operationId: "getUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "user id for user to return"
+        required: true
+        type: "number"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "User not found"
+  /user:
+    post:
+      tags:
+      - "user"
+      summary: "Add a user"
+      description: "Create a user with the user details"
+      operationId: "AddUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+      - name: "password"
+      - name: "role"
+      - name: "fullname"
+      - name: "address"
+      - name: "phone"
+        in: "body"
+        description: "user to be created"
+        required: true
+        type: "body"
+      responses:
+        201:
+          description: "successfully created"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid Json object"
+  /user/{userId}:
+    put:
+      tags:
+      - "user"
+      summary: "Update a user"
+      description: "Update a user details"
+      operationId: "EditUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "user id"
+        required: true
+        type: "number"
+      - name: "username"
+      - name: "password"
+      - name: "role"
+      - name: "fullname"
+      - name: "address"
+      - name: "phone"
+        in: "body"
+        description: "user to be created"
+        required: true
+        type: "body"
+      responses:
+        200:
+          description: "successfully done"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "User not found"
+  /user/{userId}:
+    delete:
+      tags:
+      - "user"
+      summary: "Delete a user"
+      description: "delete a user with details"
+      operationId: "deleteUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "user id"
+        required: true
+        type: "number"
+      responses:
+        200:
+          description: "successfully done"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "User not found"
+  /inventories:
+    get:
+      tags:
+      - "inventory"
+      summary: "The list of all inventories"
+      operationId: "getAllInventories"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "always successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Inventory"
+  /inventory/{carId}:
+    get:
+      tags:
+      - "inventory"
+      summary: "Find a inventory by id"
+      description: "Returns a single inventory with the details"
+      operationId: "getInventory"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "carId"
+        in: "path"
+        description: "inventory id/car id for car to return"
+        required: true
+        type: "number"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inventory"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Car not found"
+  /inventory/{carId}:
+    put:
+      tags:
+      - "inventory"
+      summary: "Update an inventory"
+      description: "Update a inventory details"
+      operationId: "EditInventory"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "carId"
+        in: "path"
+        description: "inventory id/ car id"
+        required: true
+        type: "numAvailable"
+        in: "body"
+        description: "number available of that car"
+        required: true
+        type: "body"
+      responses:
+        200:
+          description: "successfully done"
+          schema:
+            $ref: "#/definitions/Inventory"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "car not found"
+  /cart/{userId}:
+    get:
+      tags:
+      - "cart"
+      summary: "Find a cart by User Id"
+      description: "Returns a single cart with the cart items"
+      operationId: "getCart"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "user id for cart to return"
+        required: true
+        type: "number"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Car"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "user not found"
+  /cart/{userId}:
+    put:
+      tags:
+      - "cart"
+      summary: "update a cart "
+      description: "update single cart with the cart items"
+      operationId: "EditCart"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "user id for cart to return"
+        required: true
+        type: "number"
+      - name: "carId1"
+        in: "body"  
+        description: "car to delete or keep in the cart"
+        required: true
+        type: "number"
+       - name: "carId2"
+        in: "body"  
+        description: "car to delete or keep in the cart"
+        required: true
+        type: "number"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Car"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "user not found" 
+definitions:
+  Car:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "number"
+      type:
+        type: "string"
+      make:
+        type: "string"
+      model:
+        type: "string"
+      year:
+        type: "string"
+      price:
+        type: "string"
+      year:
+        type: "string"
+      vinnumber:
+        type: "string"
+      carspecs:
+        $ref: "#/definitions/Carspecs"
+  Carspecs:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "number"
+      engine:
+        type: "string"
+      transmission:
+        type: "string"
+      color:
+        type: "string"
+      horsepower:
+        type: "number"
+      weightLBS:
+        type: "number"
+      heightIN:
+        type: "number"
+      lenghtIN:
+        type: "number"
+      widthIN:
+        type: "number"
+  Cart:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "number"
+      userId:
+        type: "number"
+      carId1:
+        type: "number"
+      carId2:
+        type: "number"   
+  Coupon:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "number"
+      percentage:
+        type: "number"
+  CreditCard:
+    type: "object"
+    required:
+    - "creditcardnum"
+    properties:
+      creditcardnum:
+        type: "number"
+      cvs:
+        type: "number"
+      expirationdate:
+        type: "string"
+      userId:
+        type: "number"
+  Inventory:
+    type: "object"
+    required:
+    - "carId"
+    properties:
+      carId:
+        type: "number"
+      numAvailable:
+        type: "number"
+  Order:
+    type: "object"
+    required:
+    - "Id"
+    properties:
+      Id:
+        type: "number"
+      userId:
+        type: "number"
+      carId1:
+        type: "number"
+      carId2:
+        type: "number"
+      totalPrice:
+        type: "number"
+      purchaseDate:
+        type: "string"
+  User:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "number"
+      username:
+        type: "string"
+      password:
+        type: "string"
+      role:
+        type: "string"
+      email:
+        type: "string"
+      phone:
+        type: "string"
+      address:
+        type: "string"
+      fullname:
+        type: "string"
